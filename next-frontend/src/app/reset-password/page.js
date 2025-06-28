@@ -1,9 +1,8 @@
 'use client'
+
 import { resetPassword } from '@/api/auth'
 import ValidatedForm from '@/components/validatedForm'
 import Link from 'next/link'
- // adjust path if needed
-import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function ResetPasswordPage() {
@@ -11,12 +10,15 @@ const fields = [
         { name: 'password', label: 'New Password', type: 'password' },
         { name: 'confirmPassword', label: 'Confirm Password', type: 'password' },
     ]
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
   const [submitted, setSubmitted] = useState(false)
-
   const handleResetSubmit = async (formData) => {
-    if (!token) {
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    console.log(typeof token)
+ 
+    if (token == null || token == false) {
       return { success: false, message: 'Missing or invalid token.' };
     }
     const result = await resetPassword({
@@ -27,13 +29,13 @@ const fields = [
     if (result.success) {
       setSubmitted(true);
     } 
-      
     return result
   };
 
-
-  if (submitted) {
     return (
+      <>
+      {
+        submitted ? (
         <div className="flex items-center justify-items-center min-h-screen">
           <div className="w-full flex-col">
             <div className="flex w-full">
@@ -55,10 +57,7 @@ const fields = [
             </div>
           </div>
         </div>
-    )
-  }
-
-  return (
+        ) : (
         <div className="flex items-center justify-items-center min-h-screen">
           <div className="w-full flex-col">
             <div className="flex w-full">
@@ -75,5 +74,9 @@ const fields = [
             </div>
           </div>
         </div>
+        )
+      }
+    </>
   )
 }
+    

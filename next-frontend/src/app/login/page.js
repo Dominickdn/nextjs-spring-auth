@@ -28,7 +28,7 @@ export default function Login() {
         </div>
         <div className="flex flex-col mx-auto w-full pt-6">
           <div className="mx-auto">
-            <span className="flex-col w-full">Don't have an account? </span>
+            <span className="flex-col w-full">{"Don't have an account?"}</span>
             <Link href="/register" className="font-bold text-blue-400 hover:text-blue-600">Register now</Link>
           </div>
           <div className="mx-auto mt-2">
