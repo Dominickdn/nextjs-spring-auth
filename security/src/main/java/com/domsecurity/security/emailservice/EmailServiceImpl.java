@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
             this.javaMailSender.send(mailMessage);
             return "Mail Sent Successfully...";
         } catch (Exception var3) {
-            //Exception e = var3;
+            Exception e = var3;
             return "Error while Sending Mail";
         }
     }

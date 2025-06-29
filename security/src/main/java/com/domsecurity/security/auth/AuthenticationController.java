@@ -34,8 +34,14 @@ public class AuthenticationController {
     private final EmailService emailService;
     private final ForgotPasswordRateLimiterService forgotPasswordRateLimiterService;
 
-    @Value("${nextjs.site.url}")
+    @Value("${site.url}")
     private String siteUrl;
+
+    @Value("${site.samesite}")
+    private String sameSite; // either Lax(local) or None(production)
+
+    @Value("${is.production:false}")
+    private boolean isProduction;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request, HttpServletResponse response) {
@@ -43,10 +49,10 @@ public class AuthenticationController {
 
         ResponseCookie cookie = ResponseCookie.from("token", authResponse.getToken())
                 .httpOnly(true)
-                .secure(false) // set to true in production with HTTPS
+                .secure(isProduction) // set to true in production with HTTPS
                 .path("/")
                 .maxAge(60 * 60) // 1 hour
-                .sameSite("Lax")
+                .sameSite(sameSite)
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -60,10 +66,10 @@ public class AuthenticationController {
 
         ResponseCookie cookie = ResponseCookie.from("token", authResponse.getToken())
                 .httpOnly(true)
-                .secure(false) // set to true in production
+                .secure(isProduction) // set to true in production
                 .path("/")
                 .maxAge(60 * 60)
-                .sameSite("Lax")
+                .sameSite(sameSite)
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -76,10 +82,10 @@ public class AuthenticationController {
         // Clear the cookie by setting maxAge to 0
         ResponseCookie cookie = ResponseCookie.from("token", "")
                 .httpOnly(true)
-                .secure(false) // true in production (with HTTPS)
+                .secure(isProduction) // true in production (with HTTPS)
                 .path("/")
                 .maxAge(0) // <--- This clears the cookie
-                .sameSite("Lax")
+                .sameSite(sameSite)
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -109,6 +115,7 @@ public class AuthenticationController {
 
         // Send reset email
         String resetLink = siteUrl + "/reset-password?token=" + token;
+
         String emailBody = "Click the link to reset your password: " + resetLink;
 
         emailService.sendSimpleMail(new EmailDetails(
