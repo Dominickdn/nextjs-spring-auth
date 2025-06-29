@@ -21,6 +21,10 @@ const fields = [
     if (token == null || token == false) {
       return { success: false, message: 'Missing or invalid token.' };
     }
+
+    if (formData.password !== formData.confirmPassword) {
+      return { success: false, message: 'Passwords do not match.' };
+    }
     const result = await resetPassword({
       token,
       newPassword: formData.password,

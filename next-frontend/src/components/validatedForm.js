@@ -21,6 +21,7 @@ export default function ValidatedForm({ fields, onSubmit, redirectTo  }) {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,16 +53,23 @@ export default function ValidatedForm({ fields, onSubmit, redirectTo  }) {
       return;
     }
 
-    const result = await onSubmit(formData);
+    setLoading(true)
+    try {
+      const result = await onSubmit(formData);
 
-    if (result?.success !== false) {
-      setSubmitted(true);
-      setErrors({});
-      if (redirectTo) {
-        router.push(redirectTo);
+      if (result?.success !== false) {
+        setSubmitted(true);
+        setErrors({});
+        if (redirectTo) {
+          router.push(redirectTo);
+        }
+      } else {
+        setErrors({ form: result?.message || 'Something went wrong.' });
       }
-    } else {
-      setErrors({ form: result?.message || 'Something went wrong.' });
+    } catch (err) {
+      setErrors({ form: 'An unexpected error occurred.' });
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -85,13 +93,22 @@ export default function ValidatedForm({ fields, onSubmit, redirectTo  }) {
         ))}
         
         {errors.form && <p className="text-red-600 mb-4 p-1">{errors.form}</p>}
-
+        
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-2xl hover:bg-blue-500"
+          disabled={loading}
+          className={`flex items-center justify-center gap-2 w-full px-4 py-2 rounded-2xl text-white transition-all ${
+            loading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-500'
+          }`}
         >
           Submit
+          {loading && (
+            <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent" />
+          )}
         </button>
+        
       </form>
     </div>
   );
