@@ -22,25 +22,25 @@ export default function Home() {
           </p>
         </section>
       </main>
-      <footer className="row-start-3 flex gap-[2px] flex-wrap items-center justify-center text-md md:text-md ">
-        <div className="flex pt-4 pb-2 max-w-3/4">
-          <div className="mx-auto mt-2 px-3">
+      <footer className="row-start-3 flex gap-[1px] flex-wrap items-center justify-center text-md md:text-md ">
+        <div className="flex pt-4 pb-5 max-w-4/5">
+          <div className="mx-auto mt-2 px-2">
             <span className="flex-col w-full">First time here? </span>
               <Link href="/register"className="font-bold text-blue-400 hover:text-blue-600 underline">
                 Register
               </Link>
           </div>
-          <div className="mx-auto mt-2 max-w-3/4px-3">
+          <div className="mx-auto mt-2 max-w-3/4 px-2">
             <span className="flex-col w-full">Already have an account? </span>
             <Link href="/login"className="font-bold text-blue-400 hover:text-blue-600 underline">
               Login
             </Link>
           </div>
-          <div className="mx-auto mt-2 px-3 max-w-3/4">
+          <div className="mx-auto mt-2 px-2 max-w-3/4">
             <span className="flex-col w-full">Check out the code? </span>
-            <Link href="/" className="font-bold text-blue-400 hover:text-blue-600 underline">
+            <a className="font-bold text-blue-400 hover:text-blue-600 underline" href="https://github.com/Dominickdn/nextjs-spring-auth" target="_blank" rel="noopener noreferrer" >
               Code
-            </Link>
+            </a>
           </div>
         </div>
       </footer>

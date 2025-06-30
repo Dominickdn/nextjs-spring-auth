@@ -15,8 +15,6 @@ const fields = [
 
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
-
-    console.log(typeof token)
  
     if (token == null || token == false) {
       return { success: false, message: 'Missing or invalid token.' };

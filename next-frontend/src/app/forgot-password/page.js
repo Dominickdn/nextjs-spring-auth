@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 export default function ForgotPassword() {
   const [submitted, setSubmitted] = useState(false);
-  const [message, setMessage] = useState('');
 
   const fields = [
     { name: 'email', label: 'Email', type: 'email' }
@@ -36,11 +35,6 @@ export default function ForgotPassword() {
                     <h1 className="mx-auto text-md md:text-xl py-5 font-bold pt-8">
                         Please click on the email confirmation link
                     </h1>
-                </div>
-                <div className="flex lg:w-1/3 md:w-8/12 w-10/12 rounded-2xl mx-auto ">
-                    <div className="text-center ">
-                        <p className="text-green-600 font-bold">{message}</p>
-                    </div>
                 </div>
             </>
           ) : (
