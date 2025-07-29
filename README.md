@@ -1,27 +1,42 @@
-Custom Authentication Template
-This project demonstrates a custom authentication flow built using Spring Boot and Spring Security. This project was created as a learning exercise to better understand security and authentication concepts using modern tools like Spring Boot, Spring Security, JWT, and Next.js.
+# Custom Authentication Template
 
-Features
-User Registration (/register)
-Login with JWT stored in HTTP-only cookies (/login)
-Password Reset via Email (/forgot-password)
-Secured Dashboard Endpoint (/dashboardsecured)
-Secure password hashing with salt
-CORS configuration and environment-based deployment setup
-Tech Stack
-Frontend
-Framework: Next.js
-Styling: Tailwind CSS
-Backend
-Language: Java
-Framework: Spring Boot + Spring Security
-Database: PostgreSQL
-Email: JavaMail with Gmail SMTP
-Authentication: JWT (JSON Web Tokens) stored in HTTP-only cookies
-Environment Configuration
-Backend (application.properties)
+This project demonstrates a **custom authentication flow** built using **Spring Boot** and **Spring Security**. This project was created as a learning exercise to better understand security and authentication concepts using modern tools like Spring Boot, Spring Security, JWT, and Next.js.
+
+---
+
+## Features
+
+- User Registration (`/register`)
+- Login with JWT stored in HTTP-only cookies (`/login`)
+- Password Reset via Email (`/forgot-password`)
+- Secured Dashboard Endpoint (`/dashboardsecured`)
+- Secure password hashing with salt
+- CORS configuration and environment-based deployment setup
+
+---
+
+## Tech Stack
+
+### Frontend
+- **Framework:** Next.js
+- **Styling:** Tailwind CSS
+
+### Backend
+- **Language:** Java
+- **Framework:** Spring Boot + Spring Security
+- **Database:** PostgreSQL
+- **Email:** JavaMail with Gmail SMTP
+- **Authentication:** JWT (JSON Web Tokens) stored in HTTP-only cookies
+
+---
+
+## Environment Configuration
+
+### Backend (`application.properties`)
+
 Configure your Spring Boot backend with the following environment variables:
 
+```properties
 server.port=8081
 spring.application.name=security
 
@@ -51,32 +66,55 @@ is.production=${IS_PRODUCTION}
 site.url=${SITE_NAME}
 site.samesite=${SAME_SITE}
 jwt.secret=${JWT_SECRET}
-Frontend (.env.local)
-Create a .env.local file in the root of your Next.js frontend and add the following:
+```
 
+---
+
+## Frontend (`.env.local`)
+
+Create a `.env.local` file in the root of your **Next.js** frontend and add the following:
+
+```env
 NEXT_PUBLIC_API_SECURITY=http://localhost:8081
-Pages Frontend
-Endpoint	Description
-/register	Registers a new user
-/login	Logs in an existing user
-/forgot-password	Sends a password reset email to the user
-/dashboardsecured	Protected route; requires a valid JWT
-Getting Started
-Backend (Spring Boot)
-Ensure PostgreSQL is running and accessible.
-Set your environment variables or use a .env loader.
-Run the backend application:
+```
+## Pages Frontend
+
+| Endpoint            | Description                                  |
+|---------------------|----------------------------------------------|
+| `/register`         | Registers a new user                         |
+| `/login`            | Logs in an existing user                     |
+| `/forgot-password`  | Sends a password reset email to the user     |
+| `/dashboardsecured` |  Protected route; requires a valid JWT       |
+
+---
+
+## Getting Started
+
+### Backend (Spring Boot)
+
+1. Ensure **PostgreSQL** is running and accessible.
+2. Set your environment variables or use a `.env` loader.
+3. Run the backend application:
+
+```bash
 ./mvnw spring-boot:run
-Frontend (Next.js)
-Install frontend dependencies: npm install
+```
 
+### Frontend (Next.js)
+Install frontend dependencies:
+npm install
+```bash
 Start the development server:
+```
+```bash
 npm run dev
-Notes
-Make sure to enable SMTP access for your Gmail account (using App Passwords is recommended).
+```
 
-JWT tokens are stored securely in HTTP-only cookies, which helps protect against XSS attacks.
+##  Notes
+- Make sure to enable SMTP access for your Gmail account (using App Passwords is recommended).
 
-This project was created as a learning exercise to better understand security and authentication concepts using modern tools like Spring Boot, Spring Security, JWT, and Next.js.
+- JWT tokens are stored securely in HTTP-only cookies, which helps protect against XSS attacks.
 
-This project is not actively maintained and should not be used in production without further security enhancements and testing.
+- This project was created as a **learning exercise** to better understand **security** and **authentication** concepts using modern tools like Spring Boot, Spring Security, JWT, and Next.js.
+
+- This project is **not actively maintained** and should not be used in production without further security enhancements and testing.
